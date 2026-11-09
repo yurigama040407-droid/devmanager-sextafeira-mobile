@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">DevManager Web</string>
+
+    <!-- Auth -->
+    <string name="login_title">&lt;/&gt; DevManager Web</string>
+    <string name="login_subtitle">Faça login para continuar</string>
+    <string name="email_label">E-mail</string>
+    <string name="password_label">Senha</string>
+    <string name="login_button">Entrar na Plataforma</string>
+    <string name="no_account">Ainda não tem conta? </string>
+    <string name="register_link">Registre-se</string>
+
+    <!-- Navigation -->
+    <string name="nav_dashboard">Painel</string>
+    <string name="nav_funnel">Funil</string>
+    <string name="nav_clients">Clientes</string>
+    <string name="nav_projects">Projetos</string>
+    <string name="nav_invoices">Faturas</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_title">Painel Financeiro</string>
+    <string name="revenue_received">Receita Recebida</string>
+    <string name="revenue_expected">Receita Prevista</string>
+    <string name="active_projects">Projetos Ativos</string>
+    <string name="late_invoices">Faturas Atrasadas</string>
+    <string name="no_late_invoices">Nenhuma fatura em atraso</string>
+    <string name="chart_title">Faturamento por Projeto</string>
+
+    <!-- Clients -->
+    <string name="clients_title">Meus Clientes</string>
+    <string name="add_client">Novo Cliente</string>
+    <string name="client_active">Ativo</string>
+    <string name="client_inactive">Inativo</string>
+    <string name="error_rn003">Não é possível inativar: há projetos em andamento ou faturas pendentes.</string>
+    <string name="btn_inactivate">Inativar Cliente</string>
+
+    <!-- Projects -->
+    <string name="projects_title">Projetos</string>
+    <string name="status_planning">Planejamento</string>
+    <string name="status_coding">Em Código</string>
+    <string name="status_testing">Testes</string>
+    <string name="status_delivered">Entregue</string>
+    <string name="error_rn001">O orçamento precisa ser aprovado antes de iniciar o código.</string>
+    <string name="error_rn004">Forneça a URL de entrega ou repositório para finalizar o projeto.</string>
+
+    <!-- Invoices & Budgets -->
+    <string name="invoices_title">Faturas</string>
+    <string name="budget_title">Orçamento</string>
+    <string name="btn_view_pdf">Ver PDF</string>
+    <string name="btn_approve_budget">Aprovar orçamento</string>
+
+    <!-- General -->
+    <string name="logout">Sair da plataforma</string>
+    <string name="save">Salvar</string>
+    <string name="cancel">Cancelar</string>
+</resources>
