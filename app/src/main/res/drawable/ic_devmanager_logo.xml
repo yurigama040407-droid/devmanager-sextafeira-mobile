@@ -1,0 +1,33 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Gears and Braces Emblem -->
+    <!-- Gear outer wheel -->
+    <path
+        android:pathData="M65,25 L71,32 L80,30 L83,38 L92,41 L90,50 L97,56 L91,63 L97,70 L90,76 L92,85 L83,88 L80,96 L71,94 L65,101 L59,94 L50,96 L47,88 L38,85 L40,76 L33,70 L39,63 L33,56 L40,50 L38,41 L47,38 L50,30 L59,32 Z"
+        android:fillColor="#00B4D8" />
+
+    <!-- Inner cutout -->
+    <path
+        android:pathData="M65,63 m-22,0 a22,22 0 1,0 44,0 a22,22 0 1,0 -44,0"
+        android:fillColor="#0B1224" />
+
+    <!-- Left Brace { -->
+    <path
+        android:pathData="M42,42 C33,42 33,55 26,58 C33,61 33,74 42,74"
+        android:strokeColor="#00E5FF"
+        android:strokeWidth="6"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+
+    <!-- Checkmark ✓ -->
+    <path
+        android:pathData="M54,62 L64,72 L84,48"
+        android:strokeColor="#2ED47A"
+        android:strokeWidth="7"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+</vector>

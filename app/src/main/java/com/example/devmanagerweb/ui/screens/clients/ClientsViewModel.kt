@@ -35,8 +35,9 @@ class ClientsViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true, error = null)
             try {
-                val clients = repository.getClientes()
-                _uiState.value = _uiState.value.copy(isLoading = false, clients = clients)
+                repository.getClientes().collect { clients ->
+                    _uiState.value = _uiState.value.copy(isLoading = false, clients = clients)
+                }
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(isLoading = false, error = "Erro ao carregar clientes")
             }

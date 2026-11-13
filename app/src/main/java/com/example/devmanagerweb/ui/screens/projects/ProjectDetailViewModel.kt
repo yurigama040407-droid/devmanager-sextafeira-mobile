@@ -44,13 +44,15 @@ class ProjectDetailViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true, error = null)
             try {
-                val projeto = repository.getProjetos().find { it.id == projectId }
-                val orcamento = repository.getOrcamentoByProjeto(projectId)
-                
-                if (projeto != null) {
-                    _uiState.value = _uiState.value.copy(isLoading = false, projeto = projeto, orcamento = orcamento)
-                } else {
-                    _uiState.value = _uiState.value.copy(isLoading = false, error = "Projeto não encontrado")
+                repository.getProjetos().collect { projetos ->
+                    val projeto = projetos.find { it.id == projectId }
+                    val orcamento = repository.getOrcamentoByProjeto(projectId)
+                    
+                    if (projeto != null) {
+                        _uiState.value = _uiState.value.copy(isLoading = false, projeto = projeto, orcamento = orcamento)
+                    } else {
+                        _uiState.value = _uiState.value.copy(isLoading = false, error = "Projeto não encontrado")
+                    }
                 }
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(isLoading = false, error = "Erro ao carregar projeto")

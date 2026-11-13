@@ -33,8 +33,9 @@ class ProjectsViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true, error = null)
             try {
-                val projects = repository.getProjetos()
-                _uiState.value = _uiState.value.copy(isLoading = false, projects = projects)
+                repository.getProjetos().collect { projects ->
+                    _uiState.value = _uiState.value.copy(isLoading = false, projects = projects)
+                }
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(isLoading = false, error = "Erro ao carregar projetos")
             }

@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.devmanagerweb.domain.model.Perfil
 import com.example.devmanagerweb.ui.components.CustomTextField
+import com.example.devmanagerweb.ui.components.DevManagerLogoHeader
 import com.example.devmanagerweb.ui.components.PrimaryButton
 import com.example.devmanagerweb.ui.theme.Primary
 import com.example.devmanagerweb.ui.theme.TextSecondary
@@ -41,19 +42,15 @@ fun LoginScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(
-            text = "</> DevManager Web",
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onBackground
-        )
+        DevManagerLogoHeader()
+        
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = "Faça login para continuar",
             color = TextSecondary,
-            fontSize = 16.sp
+            fontSize = 15.sp
         )
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(28.dp))
 
         CustomTextField(
             value = email,
@@ -77,7 +74,7 @@ fun LoginScreen(
             )
         }
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(28.dp))
 
         PrimaryButton(
             text = "Entrar na Plataforma",

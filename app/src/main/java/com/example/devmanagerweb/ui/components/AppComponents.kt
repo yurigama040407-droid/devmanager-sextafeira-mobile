@@ -9,11 +9,62 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.devmanagerweb.R
 import com.example.devmanagerweb.ui.theme.BorderDark
 import com.example.devmanagerweb.ui.theme.GradientEnd
 import com.example.devmanagerweb.ui.theme.GradientStart
+import com.example.devmanagerweb.ui.theme.Success
 import com.example.devmanagerweb.ui.theme.SurfaceDark
+import com.example.devmanagerweb.ui.theme.TextSecondary
+
+@Composable
+fun DevManagerLogoHeader(
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Box(
+            modifier = Modifier.size(100.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_devmanager_logo),
+                contentDescription = "DevManager Logo",
+                tint = Color.Unspecified,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+        Spacer(modifier = Modifier.height(12.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Dev",
+                fontSize = 32.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
+            Text(
+                text = "Manager",
+                fontSize = 32.sp,
+                fontWeight = FontWeight.Bold,
+                color = Success
+            )
+        }
+        Text(
+            text = "Mobile",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Medium,
+            color = TextSecondary
+        )
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -43,13 +43,15 @@ class ClientDetailViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true, error = null)
             try {
-                val cliente = repository.getClientes().find { it.id == clientId }
-                val historicos = repository.getHistoricosByCliente(clientId)
-                
-                if (cliente != null) {
-                    _uiState.value = _uiState.value.copy(isLoading = false, cliente = cliente, historicos = historicos)
-                } else {
-                    _uiState.value = _uiState.value.copy(isLoading = false, error = "Cliente não encontrado")
+                repository.getClientes().collect { clientes ->
+                    val cliente = clientes.find { it.id == clientId }
+                    val historicos = repository.getHistoricosByCliente(clientId)
+                    
+                    if (cliente != null) {
+                        _uiState.value = _uiState.value.copy(isLoading = false, cliente = cliente, historicos = historicos)
+                    } else {
+                        _uiState.value = _uiState.value.copy(isLoading = false, error = "Cliente não encontrado")
+                    }
                 }
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(isLoading = false, error = "Erro ao carregar dados")

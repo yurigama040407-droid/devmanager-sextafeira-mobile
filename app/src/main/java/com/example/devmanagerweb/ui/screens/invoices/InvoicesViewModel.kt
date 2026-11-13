@@ -45,20 +45,21 @@ class InvoicesViewModel @Inject constructor(
                 val isCliente = sessionManager.fetchUserProfile() == Perfil.CLIENTE.name
                 val clientId = sessionManager.fetchUserId() ?: ""
                 
-                val faturas = repository.getFaturas()
-                val projetos = repository.getProjetos()
-
-                val invoicesData = faturas.mapNotNull { f ->
-                    val projeto = projetos.find { it.id == f.projetoId }
-                    if (projeto != null) {
-                        // Se for cliente, filtra só as dele
-                        if (!isCliente || projeto.clienteId == clientId) {
-                            InvoiceItemData(f, projeto)
-                        } else null
-                    } else null
+                repository.getFaturas().collect { faturas ->
+                    repository.getProjetos().collect { projetos ->
+                        val invoicesData = faturas.mapNotNull { f ->
+                            val projeto = projetos.find { it.id == f.projetoId }
+                            if (projeto != null) {
+                                // Se for cliente, filtra só as dele
+                                if (!isCliente || projeto.clienteId == clientId) {
+                                    InvoiceItemData(f, projeto)
+                                } else null
+                            } else null
+                        }
+                        
+                        _uiState.value = _uiState.value.copy(isLoading = false, invoices = invoicesData)
+                    }
                 }
-                
-                _uiState.value = _uiState.value.copy(isLoading = false, invoices = invoicesData)
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(isLoading = false, error = "Erro ao carregar faturas")
             }

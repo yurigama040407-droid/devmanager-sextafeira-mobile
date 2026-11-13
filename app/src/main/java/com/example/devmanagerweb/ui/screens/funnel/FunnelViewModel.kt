@@ -42,18 +42,20 @@ class FunnelViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true, error = null)
             try {
-                val projetos = repository.getProjetos()
-                val clientes = repository.getClientes()
-                val orcamentos = repository.getOrcamentos()
-
-                val funnelCards = projetos.mapNotNull { p ->
-                    val cliente = clientes.find { it.id == p.clienteId }
-                    val orcamento = orcamentos.find { it.projetoId == p.id }
-                    if (cliente != null) {
-                        FunnelCardData(p, cliente, orcamento?.valor ?: 0.0)
-                    } else null
+                repository.getProjetos().collect { projetos ->
+                    repository.getClientes().collect { clientes ->
+                        repository.getOrcamentos().collect { orcamentos ->
+                            val funnelCards = projetos.mapNotNull { p ->
+                                val cliente = clientes.find { it.id == p.clienteId }
+                                val orcamento = orcamentos.find { it.projetoId == p.id }
+                                if (cliente != null) {
+                                    FunnelCardData(p, cliente, orcamento?.valor ?: 0.0)
+                                } else null
+                            }
+                            _uiState.value = _uiState.value.copy(isLoading = false, cards = funnelCards)
+                        }
+                    }
                 }
-                _uiState.value = _uiState.value.copy(isLoading = false, cards = funnelCards)
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(isLoading = false, error = "Erro ao carregar funil")
             }
@@ -62,13 +64,15 @@ class FunnelViewModel @Inject constructor(
 
     fun moveToNextPhase(projetoId: String) {
         viewModelScope.launch {
-            val projeto = repository.getProjetos().find { it.id == projetoId } ?: return@launch
-            val currentIndex = fases.indexOf(projeto.faseFunil)
-            if (currentIndex in 0 until (fases.size - 1)) {
-                val nextFase = fases[currentIndex + 1]
-                val result = repository.updateProjeto(projeto.copy(faseFunil = nextFase))
-                if (result.isSuccess) {
-                    loadData()
+            repository.getProjetos().collect { projetos ->
+                val projeto = projetos.find { it.id == projetoId } ?: return@collect
+                val currentIndex = fases.indexOf(projeto.faseFunil)
+                if (currentIndex in 0 until (fases.size - 1)) {
+                    val nextFase = fases[currentIndex + 1]
+                    val result = repository.updateProjeto(projeto.copy(faseFunil = nextFase))
+                    if (result.isSuccess) {
+                        loadData()
+                    }
                 }
             }
         }

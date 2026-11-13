@@ -43,28 +43,28 @@ class DashboardViewModel @Inject constructor(
                 val perfil = sessionManager.fetchUserProfile()
                 val isCliente = perfil == Perfil.CLIENTE.name
 
-                val projetos = repository.getProjetos()
-                val faturas = repository.getFaturas()
-                
-                // Calculos Simples
-                val recebida = faturas.filter { it.status == StatusFatura.PAGA }.sumOf { it.valor }
-                val prevista = faturas.filter { it.status != StatusFatura.PAGA }.sumOf { it.valor }
-                val ativos = projetos.count { it.status != StatusProjeto.ENTREGUE }
-                val atrasadas = faturas.filter { it.status == StatusFatura.ATRASADA }
-                
-                val faturamentoMap = projetos.associate { p -> 
-                    p.titulo to faturas.filter { it.projetoId == p.id }.sumOf { it.valor }
-                }
+                repository.getProjetos().collect { projetos ->
+                    repository.getFaturas().collect { faturas ->
+                        val recebida = faturas.filter { it.status == StatusFatura.PAGA }.sumOf { it.valor }
+                        val prevista = faturas.filter { it.status != StatusFatura.PAGA }.sumOf { it.valor }
+                        val ativos = projetos.count { it.status != StatusProjeto.ENTREGUE }
+                        val atrasadas = faturas.filter { it.status == StatusFatura.ATRASADA }
+                        
+                        val faturamentoMap = projetos.associate { p -> 
+                            p.titulo to faturas.filter { it.projetoId == p.id }.sumOf { it.valor }
+                        }
 
-                _uiState.value = DashboardState(
-                    isLoading = false,
-                    receitaRecebida = recebida,
-                    receitaPrevista = prevista,
-                    projetosAtivos = ativos,
-                    faturasAtrasadas = atrasadas,
-                    faturamentoPorProjeto = faturamentoMap,
-                    isCliente = isCliente
-                )
+                        _uiState.value = DashboardState(
+                            isLoading = false,
+                            receitaRecebida = recebida,
+                            receitaPrevista = prevista,
+                            projetosAtivos = ativos,
+                            faturasAtrasadas = atrasadas,
+                            faturamentoPorProjeto = faturamentoMap,
+                            isCliente = isCliente
+                        )
+                    }
+                }
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(isLoading = false, error = "Erro ao carregar dados")
             }
